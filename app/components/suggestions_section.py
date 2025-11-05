@@ -2,21 +2,11 @@ import reflex as rx
 from app.states.chat_state import ChatState
 
 
-def suggestion_chip(
-    icon_name: str, text: str
-) -> rx.Component:
+def suggestion_chip(icon_name: str, text: str) -> rx.Component:
     return rx.el.button(
-        rx.icon(
-            icon_name,
-            size=18,
-            class_name="mr-2 text-neutral-300",
-        ),
-        rx.el.span(
-            text, class_name="text-sm text-neutral-200"
-        ),
-        on_click=lambda: ChatState.submit_suggestion_as_prompt(
-            text
-        ),
+        rx.icon(icon_name, size=18, class_name="mr-2 text-neutral-300"),
+        rx.el.span(text, class_name="text-sm text-neutral-200"),
+        on_click=lambda: ChatState.submit_suggestion_as_prompt(text),
         type="button",
         class_name="bg-[#2A2B2E] px-4 py-2 rounded-lg flex items-center hover:bg-[#3a3b3e] transition-colors",
     )

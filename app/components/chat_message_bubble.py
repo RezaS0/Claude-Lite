@@ -2,9 +2,7 @@ import reflex as rx
 from app.states.chat_state import ChatState, Message
 
 
-def user_message_bubble(
-    message_content: str,
-) -> rx.Component:
+def user_message_bubble(message_content: str) -> rx.Component:
     return rx.el.div(
         rx.el.div(
             rx.el.div(
@@ -35,8 +33,7 @@ def ai_message_bubble(message: Message) -> rx.Component:
                     class_name="flex items-center justify-center w-8 h-8 bg-neutral-600 text-neutral-200 rounded-full text-sm font-medium mr-3 shrink-0",
                 ),
                 rx.icon(
-                    "sparkle",
-                    class_name="text-[#E97055] w-8 h-8 mr-3 shrink-0 p-1",
+                    "sparkle", class_name="text-[#E97055] w-8 h-8 mr-3 shrink-0 p-1"
                 ),
             ),
             rx.el.div(
@@ -69,11 +66,7 @@ def ai_message_bubble(message: Message) -> rx.Component:
                             ),
                             rx.el.button(
                                 "Retry",
-                                rx.icon(
-                                    "chevron-down",
-                                    size=16,
-                                    class_name="ml-1",
-                                ),
+                                rx.icon("chevron-down", size=16, class_name="ml-1"),
                                 type="button",
                                 class_name="flex items-center text-neutral-400 hover:text-neutral-200 bg-transparent p-0 text-sm font-medium",
                             ),
@@ -95,9 +88,7 @@ def ai_message_bubble(message: Message) -> rx.Component:
     )
 
 
-def chat_message_bubble_component(
-    message: Message, index: int
-) -> rx.Component:
+def chat_message_bubble_component(message: Message, index: int) -> rx.Component:
     return rx.cond(
         message["role"] == "user",
         user_message_bubble(message["content"]),

@@ -1,28 +1,19 @@
 import reflex as rx
 from app.states.chat_state import ChatState
-from app.components.chat_message_bubble import (
-    chat_message_bubble_component,
-)
+from app.components.chat_message_bubble import chat_message_bubble_component
 from app.components.chat_input_bar import chat_input_bar
 
 
 def _chat_page_header() -> rx.Component:
     return rx.el.div(
         rx.el.button(
-            rx.icon(
-                "arrow-left",
-                size=20,
-                class_name="mr-1 text-neutral-300",
-            ),
+            rx.icon("arrow-left", size=20, class_name="mr-1 text-neutral-300"),
             "Back",
             on_click=ChatState.go_back_and_clear_chat,
             class_name="flex items-center text-neutral-300 hover:text-neutral-100 bg-[#2A2B2E] hover:bg-[#3a3b3e] px-3 py-1.5 rounded-md text-sm font-medium",
         ),
         rx.el.div(
-            rx.el.span(
-                "Model: ",
-                class_name="text-neutral-400 text-xs",
-            ),
+            rx.el.span("Model: ", class_name="text-neutral-400 text-xs"),
             rx.el.span(
                 ChatState.selected_model,
                 class_name="text-neutral-300 text-xs font-medium",
@@ -41,9 +32,7 @@ def chat_page() -> rx.Component:
                 rx.el.div(class_name="pt-4"),
                 rx.foreach(
                     ChatState.messages,
-                    lambda msg, idx: chat_message_bubble_component(
-                        msg, idx
-                    ),
+                    lambda msg, idx: chat_message_bubble_component(msg, idx),
                 ),
                 rx.cond(
                     ChatState.is_streaming,

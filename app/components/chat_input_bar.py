@@ -8,20 +8,12 @@ def chat_input_bar() -> rx.Component:
             rx.el.div(
                 rx.el.div(
                     rx.el.button(
-                        rx.icon(
-                            "plus",
-                            size=20,
-                            class_name="text-neutral-400",
-                        ),
+                        rx.icon("plus", size=20, class_name="text-neutral-400"),
                         type="button",
                         class_name="p-2 bg-[#40414F] hover:bg-[#50515f] rounded-md",
                     ),
                     rx.el.button(
-                        rx.icon(
-                            "disc_3",
-                            size=20,
-                            class_name="text-neutral-400",
-                        ),
+                        rx.icon("disc_3", size=20, class_name="text-neutral-400"),
                         type="button",
                         class_name="p-2 bg-[#40414F] hover:bg-[#50515f] rounded-md",
                     ),
@@ -38,11 +30,7 @@ def chat_input_bar() -> rx.Component:
                 ),
                 rx.el.div(
                     rx.el.button(
-                        rx.icon(
-                            "arrow-up",
-                            size=20,
-                            class_name="text-white",
-                        ),
+                        rx.icon("arrow-up", size=20, class_name="text-white"),
                         type="submit",
                         class_name="p-2.5 bg-[#E97055] hover:bg-[#d3654c] rounded-md aspect-square",
                         is_disabled=ChatState.is_streaming,
