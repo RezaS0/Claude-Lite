@@ -24,6 +24,7 @@ class ChatState(rx.State):
     selected_mode: str = "Agent"
     selected_model: str = "Claude 3 Haiku"
     error_message: str = ""
+    uploaded_files: list[str] = []
 
     @rx.var
     def model_options(self) -> list[str]:
@@ -36,6 +37,7 @@ class ChatState(rx.State):
         self.messages = []
         self.is_streaming = False
         self.error_message = ""
+        self.uploaded_files = []
         return rx.redirect("/")
 
     @rx.event
@@ -45,6 +47,16 @@ class ChatState(rx.State):
         yield ChatState.send_initial_message_and_navigate(form_data)
 
     @rx.event
+    async def handle_upload(self, files: list[rx.UploadFile]):
+        for file in files:
+            upload_data = await file.read()
+            self.uploaded_files.append(file.filename)
+
+    @rx.event
+    def clear_uploads(self):
+        self.uploaded_files = []
+
+    @rx.event
     def send_initial_message_and_navigate(self, form_data: dict):
         prompt = form_data.get("prompt_input", "").strip()
         if not prompt or self.is_streaming:
@@ -52,7 +64,13 @@ class ChatState(rx.State):
                 yield rx.toast("Please enter a message.", duration=3000)
             return
         self.messages = []
-        self.messages.append({"role": "user", "content": prompt})
+        full_prompt = prompt
+        if self.uploaded_files:
+            full_prompt += """
+
+Attached files: """ + ", ".join(self.uploaded_files)
+            self.uploaded_files = []
+        self.messages.append({"role": "user", "content": full_prompt})
         self.messages.append(
             {"role": "assistant", "content": "", "is_initial_greeting": False}
         )
@@ -68,7 +86,13 @@ class ChatState(rx.State):
             if not prompt:
                 yield rx.toast("Please enter a message.", duration=3000)
             return
-        self.messages.append({"role": "user", "content": prompt})
+        full_prompt = prompt
+        if self.uploaded_files:
+            full_prompt += """
+
+Attached files: """ + ", ".join(self.uploaded_files)
+            self.uploaded_files = []
+        self.messages.append({"role": "user", "content": full_prompt})
         self.messages.append(
             {"role": "assistant", "content": "", "is_initial_greeting": False}
         )

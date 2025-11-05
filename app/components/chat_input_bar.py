@@ -4,18 +4,35 @@ from app.states.chat_state import ChatState
 
 def chat_input_bar() -> rx.Component:
     return rx.el.div(
+        rx.el.div(
+            rx.foreach(
+                ChatState.uploaded_files,
+                lambda f: rx.el.div(
+                    f,
+                    rx.el.button(
+                        rx.icon("x", size=12),
+                        on_click=ChatState.clear_uploads,
+                        class_name="ml-2 text-neutral-400 hover:text-white",
+                        size="1",
+                    ),
+                    class_name="flex items-center text-xs bg-neutral-700 text-neutral-200 px-2 py-1 rounded-md",
+                ),
+            ),
+            class_name="flex flex-wrap gap-2 pb-2 justify-center",
+        ),
         rx.el.form(
             rx.el.div(
                 rx.el.div(
-                    rx.el.button(
-                        rx.icon("plus", size=20, class_name="text-neutral-400"),
-                        type="button",
-                        class_name="p-2 bg-[#40414F] hover:bg-[#50515f] rounded-md",
-                    ),
-                    rx.el.button(
-                        rx.icon("disc_3", size=20, class_name="text-neutral-400"),
-                        type="button",
-                        class_name="p-2 bg-[#40414F] hover:bg-[#50515f] rounded-md",
+                    rx.upload.root(
+                        rx.el.button(
+                            rx.icon(
+                                "paperclip", size=18, class_name="text-neutral-400"
+                            ),
+                            type="button",
+                            class_name="p-2 bg-[#40414F] hover:bg-[#50515f] rounded-md",
+                        ),
+                        on_drop=ChatState.handle_upload(rx.upload_files()),
+                        multiple=True,
                     ),
                     class_name="flex items-center space-x-1 p-2",
                 ),
@@ -43,5 +60,5 @@ def chat_input_bar() -> rx.Component:
             reset_on_submit=True,
             class_name="w-full max-w-3xl",
         ),
-        class_name="sticky bottom-0 w-full flex justify-center p-4 bg-[#202123] border-t border-neutral-700",
+        class_name="sticky bottom-0 w-full flex flex-col items-center p-4 bg-[#202123] border-t border-neutral-700",
     )
