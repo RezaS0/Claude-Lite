@@ -41,7 +41,7 @@ def input_section() -> rx.Component:
                         ),
                         value=ChatState.selected_project,
                         on_change=ChatState.set_selected_project,
-                        class_name="bg-[#40414F] text-neutral-300 text-sm rounded-md p-1 border border-neutral-600 focus:outline-none",
+                        class_name="bg-[#40414F] text-neutral-300 text-sm rounded-md p-2 border border-neutral-600 focus:outline-none h-9",
                     ),
                     class_name="flex items-center space-x-2",
                 ),
