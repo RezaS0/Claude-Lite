@@ -23,8 +23,13 @@ class ChatState(rx.State):
     is_streaming: bool = False
     selected_mode: str = "Agent"
     selected_model: str = "Claude 3 Haiku"
+    selected_project: str = "General"
     error_message: str = ""
     uploaded_files: list[str] = []
+
+    @rx.var
+    def project_options(self) -> list[str]:
+        return ["General", "Project A", "Project B", "Project C"]
 
     @rx.var
     def model_options(self) -> list[str]:

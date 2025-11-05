@@ -34,7 +34,16 @@ def chat_input_bar() -> rx.Component:
                         on_drop=ChatState.handle_upload(rx.upload_files()),
                         multiple=True,
                     ),
-                    class_name="flex items-center space-x-1 p-2",
+                    rx.el.select(
+                        rx.foreach(
+                            ChatState.project_options,
+                            lambda option: rx.el.option(option, value=option),
+                        ),
+                        value=ChatState.selected_project,
+                        on_change=ChatState.set_selected_project,
+                        class_name="bg-[#40414F] text-neutral-300 text-sm rounded-md p-1 border border-neutral-600 focus:outline-none",
+                    ),
+                    class_name="flex items-center space-x-2 p-2",
                 ),
                 rx.el.textarea(
                     name="chat_page_prompt_input",

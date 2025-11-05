@@ -34,6 +34,15 @@ def input_section() -> rx.Component:
                         on_drop=ChatState.handle_upload(rx.upload_files()),
                         multiple=True,
                     ),
+                    rx.el.select(
+                        rx.foreach(
+                            ChatState.project_options,
+                            lambda option: rx.el.option(option, value=option),
+                        ),
+                        value=ChatState.selected_project,
+                        on_change=ChatState.set_selected_project,
+                        class_name="bg-[#40414F] text-neutral-300 text-sm rounded-md p-1 border border-neutral-600 focus:outline-none",
+                    ),
                     class_name="flex items-center space-x-2",
                 ),
                 rx.el.div(
